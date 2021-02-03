@@ -13,7 +13,7 @@ pygame.display.set_caption("Space Invaders")
 
 #Background
 BACKGROUND = pygame.image.load(os.path.join("assets", "background-black.png"))
-
+BACKGROUND = pygame.transform.scale(BACKGROUND,(WIDTH, HEIGHT))
 #Lasers
 PIXEL_LASER_BLUE = pygame.image.load(os.path.join("assets", "pixel_laser_blue.png"))
 PIXEL_LASER_GREEN = pygame.image.load(os.path.join("assets", "pixel_laser_green.png"))

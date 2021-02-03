@@ -28,3 +28,25 @@ PIXEL_SPACE_SHIP_RED = pygame.image.load(os.path.join("assets", "pixel_ship_red_
 #Player Ship
 MAIN_PLAYER = pygame.image.load(os.path.join("assets", "pixel_ship_yellow.png"))
 
+def main():
+	#if loop will be running or not
+	run = True
+	#frames per seconds
+	FPS = 60
+	clock = pygame.time.Clock()
+
+	#handles drawing of window
+	def redraw_window():
+		#blit adds image to window at defined location (0,0)->top left in pygame
+		WIN.blit(BACKGROUND, (0,0))
+		pygame.display.update()
+
+	while run:
+		#allows consitently by setting clock speed
+		clock.tick(FPS)
+
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				run = False
+
+main()

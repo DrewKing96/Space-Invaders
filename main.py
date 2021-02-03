@@ -44,6 +44,7 @@ def main():
 	while run:
 		#allows consitently by setting clock speed
 		clock.tick(FPS)
+		redraw_window()
 
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:

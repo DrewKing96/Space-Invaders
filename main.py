@@ -221,7 +221,7 @@ def main():
 
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
-				run = False
+				quit()
 
 		#if asset desires to be moved with only one key press, add inside event loop, outside loop:multiple key presses, allowing for diagonal movement
 		#gets keys being pressed
@@ -261,7 +261,7 @@ def main_menu():
 	title_font = pygame.font.SysFont("comicsans", 70)
 	run = True
 	while run:
-		WIN.blil(BACKGROUND, (0, 0))
+		WIN.blit(BACKGROUND, (0, 0))
 		title_label = title_font.render("Press the mouse to being...", 1, (255, 255, 255))
 		WIN.blit(title_label, (WIDTH/2 - title_label.get_width()/2, 350))
 		for event in pygame.event.get():
@@ -270,4 +270,5 @@ def main_menu():
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				main()
 	pygame.quit()
-main()
+
+main_menu()

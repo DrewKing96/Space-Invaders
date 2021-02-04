@@ -56,6 +56,8 @@ def main():
 
 	main_font = pygame.font.SysFont("comicsans", 50)
 
+	player_velocity = 5
+
 	#handles drawing of window
 	def redraw_window():
 		#blit adds image to window at defined location (0,0)->top left in pygame
@@ -85,6 +87,12 @@ def main():
 		#if asset desires to be moved with only one key press, add inside event loop, outside loop:multiple key presses, allowing for diagonal movement
 		#gets keys being pressed
 		keys = pygame.key.get_pressed()
-		if keys[pygame.K_
-
+		if keys[pygame.K_a]: #left
+			ship.x -= player_velocity
+		if keys[pygame.K_d]: #right
+			ship.x += player_velocity
+		if keys[pygame.K_w]: #up
+			ship.y -= player_velocity
+		if keys[pygame.K_s]: #down
+			ship.y += player_velocity
 main()

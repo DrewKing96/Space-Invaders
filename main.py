@@ -175,20 +175,35 @@ def main():
 		for enemy in enemies:
 			enemy.draw(WIN)
 
-		ship.draw(WIN)
+		player.draw(WIN)
+
+		if lost:
+			lost_label = lost_font.render("You Lost!!", 1, (255, 255, 255))
+			WIN.blit(lost_label, (WIDTH/2 - lost_label.get_width()/2, 350))
 
 		pygame.display.update()
 
 	while run:
 		#allows consitently by setting clock speed
 		clock.tick(FPS)
+		redraw_window()
+
+		if lives <= 0 or player.health <= 0:
+			lost = True
+			lost_count += 1
+
+		if lost:
+			if lost_count > FPS * 3:
+				run = False
+			else:
+				continue
 
 		if len(enemies) == 0:
 			level += 1
 			wave_length += 5
 			for i in range(wave_length):
 				enemy = Enemy(random.randrange(50, WIDTH-100), random.randrange(-1500, -100), random.choice(["red", "blue", "green"]))
-				enemy.append(enemy)
+				enemies.append(enemy)
 
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:

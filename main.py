@@ -161,7 +161,7 @@ def main():
 
 	lost = False
 	lost_count = 0
-	player = Player(300, 650)
+	player = Player(300, 630)
 
 	main_font = pygame.font.SysFont("comicsans", 50)
 	lost_font = pygame.font.SysFont("comicsans", 60)
@@ -235,7 +235,7 @@ def main():
 		if keys[pygame.K_w] and player.y + player_velocity > 0: #up
 			player.y -= player_velocity
 
-		if keys[pygame.K_s] and player.y + player_velocity + player.get_height() < HEIGHT: #down
+		if keys[pygame.K_s] and player.y + player_velocity + player.get_height() + 10 < HEIGHT: #down
 			player.y += player_velocity
 
 		if keys[pygame.K_SPACE]:

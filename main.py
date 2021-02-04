@@ -70,7 +70,7 @@ def main():
 		WIN.blit(level_label, (WIDTH-level_label.get_width() - 10, 10))
 
 		ship.draw(WIN)
-		
+
 		pygame.display.update()
 
 	while run:
@@ -81,5 +81,10 @@ def main():
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				run = False
+
+		#if asset desires to be moved with only one key press, add inside event loop, outside loop:multiple key presses, allowing for diagonal movement
+		#gets keys being pressed
+		keys = pygame.key.get_pressed()
+		if keys[pygame.K_]
 
 main()

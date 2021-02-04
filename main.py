@@ -264,6 +264,7 @@ def main_menu():
 		WIN.blit(BACKGROUND, (0, 0))
 		title_label = title_font.render("Press the mouse to being...", 1, (255, 255, 255))
 		WIN.blit(title_label, (WIDTH/2 - title_label.get_width()/2, 350))
+		pygame.display.update()
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				run = False

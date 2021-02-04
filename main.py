@@ -41,7 +41,38 @@ class Ship:
 		self.cool_down_counter = 0
 
 	def draw(self, window):
-		pygame.draw.rect(window, (255, 0, 0), (self.x, self.y, 50, 50))
+		#pygame.draw.rect(window, (255, 0, 0), (self.x, self.y, 50, 50))
+		window.blit(self.ship_img, (self.x, self.y))
+
+	def get_width(self):
+		return self.ship_img.get_width()
+
+	def get_height(self):
+		return self.ship_img.get_height()
+
+class Player(Ship):
+	def __init__(self, x, y, health=100):
+		#super adds the initailization of values from inherited class
+		super().__init__(x, y, health)
+		self.ship_img = MAIN_PLAYER
+		self.laser_img = PIXEL_LASER_YELLOW
+		self.mask = pygame.mask.from_surface(self.ship_img)
+		self.max_health = health
+
+class Enemy(Ship):
+	COLOR_MAP = {
+		"red": (PIXEL_SPACE_SHIP_RED, PIXEL_LASER_RED),
+		"green": (PIXEL_SPACE_SHIP_GREEN, PIXEL_LASER_GREEN),
+		"blue": (PIXEL_SPACE_SHIP_BLUE, PIXEL_LASER_BLUE)
+	}
+	def __init__(self, x, y, color, health=100): "red", "green", "blue"
+		super().__init__(x, y, health)
+		self.ship_img, self.laser_img = self.COLOR_MAP[color]
+		self.mask = pygame.mask.from_surface(self.ship_img)
+
+	def move(self, velocity):
+		self.y += velocity
+
 
 def main():
 	#if loop will be running or not
@@ -49,12 +80,16 @@ def main():
 	#frames per seconds
 	FPS = 60
 	clock = pygame.time.Clock()
-	level = 1
+	level = 0
 	lives = 5
 
-	ship = Ship(300, 650)
+	ship = Player(300, 650)
 
 	main_font = pygame.font.SysFont("comicsans", 50)
+
+	enemies = []
+	wave_length = 5
+	enemy_velocity = 1
 
 	player_velocity = 5
 
@@ -71,6 +106,9 @@ def main():
 		WIN.blit(lives_label, (10, 10))
 		WIN.blit(level_label, (WIDTH-level_label.get_width() - 10, 10))
 
+		for enemy in enemies:
+			enemy.draw(WIN)
+
 		ship.draw(WIN)
 
 		pygame.display.update()
@@ -78,7 +116,13 @@ def main():
 	while run:
 		#allows consitently by setting clock speed
 		clock.tick(FPS)
-		redraw_window()
+
+		if len(enemies) == 0:
+			level += 1
+			wave_length += 5
+			for i in range(wave_length):
+				enemy = Enemy(random.randrange(50, WIDTH-100), random.randrange(-1500, -100), random.choice(["red", "blue", "green"]))
+				enemy.append(enemy)
 
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -87,12 +131,17 @@ def main():
 		#if asset desires to be moved with only one key press, add inside event loop, outside loop:multiple key presses, allowing for diagonal movement
 		#gets keys being pressed
 		keys = pygame.key.get_pressed()
-		if keys[pygame.K_a]: #left
+		if keys[pygame.K_a] and ship.x + player_velocity > 0: #left
 			ship.x -= player_velocity
-		if keys[pygame.K_d]: #right
+
+		if keys[pygame.K_d] and ship.x + player_velocity + ship.get_width() < WIDTH: #right
 			ship.x += player_velocity
-		if keys[pygame.K_w]: #up
+
+		if keys[pygame.K_w] and ship.y + player_velocity > 0: #up
 			ship.y -= player_velocity
-		if keys[pygame.K_s]: #down
+
+		if keys[pygame.K_s] and ship.y + player_velocity + ship.get_height() < HEIGHT: #down
 			ship.y += player_velocity
+
+		redraw_window()
 main()

@@ -85,6 +85,6 @@ def main():
 		#if asset desires to be moved with only one key press, add inside event loop, outside loop:multiple key presses, allowing for diagonal movement
 		#gets keys being pressed
 		keys = pygame.key.get_pressed()
-		if keys[pygame.K_]
+		if keys[pygame.K_
 
 main()

@@ -30,7 +30,27 @@ PIXEL_SPACE_SHIP_RED = pygame.image.load(os.path.join("assets", "pixel_ship_red_
 #Player Ship
 MAIN_PLAYER = pygame.image.load(os.path.join("assets", "pixel_ship_yellow.png"))
 
+class Laser:
+	def __init__(self, x, y, img):
+		self.x = x
+		self.y = y
+		self.img = img
+		self.mask = pygame.mask.from_surface(self.img)
+
+	def draw(self, window):
+		window.blit(self.img, (self.x, self.y))
+
+	def move(self, velocity):
+		self.y += velocity
+
+	def off_screen(self, height):
+		return not(self.y <= height and self.y >= 0)
+
+	def collision(self, obj):
+		return collide(obj, self)
+
 class Ship:
+	COOLDOWN = 30
 	def __init__(self, x, y, health=100):
 		self.x = x
 		self.y = y

@@ -130,6 +130,12 @@ class Enemy(Ship):
 	def move(self, velocity):
 		self.y += velocity
 
+	def shoot(self):
+		if self.cool_down_counter == 0:
+			laser = Laser(self.x-20, self.y, self.laser_img)
+			self.lasers.append(laser)
+			self.cool_down_counter = 1
+
 def collide(obj1, obj2):
 	offset_x = obj2.x - obj1.x
 	offset_y = obj2.y - obj1.y

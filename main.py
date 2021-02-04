@@ -235,7 +235,7 @@ def main():
 		if keys[pygame.K_w] and player.y + player_velocity > 0: #up
 			player.y -= player_velocity
 
-		if keys[pygame.K_s] and player.y + player_velocity + player.get_height() + 10 < HEIGHT: #down
+		if keys[pygame.K_s] and player.y + player_velocity + player.get_height() + 15 < HEIGHT: #down
 			player.y += player_velocity
 
 		if keys[pygame.K_SPACE]:

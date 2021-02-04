@@ -212,17 +212,30 @@ def main():
 		#if asset desires to be moved with only one key press, add inside event loop, outside loop:multiple key presses, allowing for diagonal movement
 		#gets keys being pressed
 		keys = pygame.key.get_pressed()
-		if keys[pygame.K_a] and ship.x + player_velocity > 0: #left
-			ship.x -= player_velocity
+		if keys[pygame.K_a] and player.x + player_velocity > 0: #left
+			player.x -= player_velocity
 
-		if keys[pygame.K_d] and ship.x + player_velocity + ship.get_width() < WIDTH: #right
-			ship.x += player_velocity
+		if keys[pygame.K_d] and player.x + player_velocity + player.get_width() < WIDTH: #right
+			player.x += player_velocity
 
-		if keys[pygame.K_w] and ship.y + player_velocity > 0: #up
-			ship.y -= player_velocity
+		if keys[pygame.K_w] and player.y + player_velocity > 0: #up
+			player.y -= player_velocity
 
-		if keys[pygame.K_s] and ship.y + player_velocity + ship.get_height() < HEIGHT: #down
-			ship.y += player_velocity
+		if keys[pygame.K_s] and player.y + player_velocity + player.get_height() < HEIGHT: #down
+			player.y += player_velocity
 
-		redraw_window()
+		if keys[pygame.K_SPACE]:
+			player.shoot()
+
+		for enemy in enemies[:]:
+			enemy.move(enemy_velocity)
+			enemy.move_lasers(laser_velocity, player)
+
+			if random.randrange(0, 2*60) == 1:
+				enemy.shoot()
+			if enemy.y + enemy.get_height() > HEIGHT:
+				lives -= 1
+				enemies.remove(enemy)
+
+		player.move_lasers(-laser_velocity, enemies)
 main()

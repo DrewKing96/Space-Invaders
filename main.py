@@ -145,15 +145,19 @@ def main():
 	level = 0
 	lives = 5
 
-	ship = Player(300, 650)
+	lost = False
+	lost_count = 0
+	player = Player(300, 650)
 
 	main_font = pygame.font.SysFont("comicsans", 50)
+	lost_font = pygame.font.SysFont("comicsans", 60)
 
 	enemies = []
 	wave_length = 5
 	enemy_velocity = 1
 
 	player_velocity = 5
+	laser_velocity = 4
 
 	#handles drawing of window
 	def redraw_window():

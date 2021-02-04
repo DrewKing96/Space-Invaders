@@ -103,19 +103,37 @@ class Player(Ship):
 		self.mask = pygame.mask.from_surface(self.ship_img)
 		self.max_health = health
 
+	def move_lasers(self, velocity, objs):
+		self.cooldown()
+		for laser in self.lasers:
+			laser.move(velocity)
+			if laser.off_screen(HEIGHT):
+				self.lasers.remove(laser)
+			else:
+				for obj in objs:
+					if laser.collision(obj):
+						objs.remove(obj)
+						self.lasers.remove(laser)
+
 class Enemy(Ship):
 	COLOR_MAP = {
-		"red": (PIXEL_SPACE_SHIP_RED, PIXEL_LASER_RED),
-		"green": (PIXEL_SPACE_SHIP_GREEN, PIXEL_LASER_GREEN),
-		"blue": (PIXEL_SPACE_SHIP_BLUE, PIXEL_LASER_BLUE)
-	}
-	def __init__(self, x, y, color, health=100): "red", "green", "blue"
+				"red": (PIXEL_SPACE_SHIP_RED, PIXEL_LASER_RED),
+				"green": (PIXEL_SPACE_SHIP_GREEN, PIXEL_LASER_GREEN),
+				"blue": (PIXEL_SPACE_SHIP_BLUE, PIXEL_LASER_BLUE)
+				}
+
+	def __init__(self, x, y, color, health=100):
 		super().__init__(x, y, health)
 		self.ship_img, self.laser_img = self.COLOR_MAP[color]
 		self.mask = pygame.mask.from_surface(self.ship_img)
 
 	def move(self, velocity):
 		self.y += velocity
+
+def collide(obj1, obj2):
+	offset_x = obj2.x - obj1.x
+	offset_y = obj2.y - obj1.y
+	return obj1.mask.overlap(obj2.mask, (offset_x, offset_y)) != None 
 
 
 def main():

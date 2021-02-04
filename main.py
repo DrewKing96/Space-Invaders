@@ -239,9 +239,15 @@ def main():
 
 			if random.randrange(0, 2*60) == 1:
 				enemy.shoot()
-			if enemy.y + enemy.get_height() > HEIGHT:
+
+			if collide(enemy, player):
+				player.health -=10
+				enemies.remove(enemy)
+			elif enemy.y + enemy.get_height() > HEIGHT:
 				lives -= 1
 				enemies.remove(enemy)
+
+
 
 		player.move_lasers(-laser_velocity, enemies)
 main()
